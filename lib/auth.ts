@@ -3,24 +3,15 @@ import {
 	bearer,
 	admin,
 	multiSession,
-	organization,
-	twoFactor,
 	oneTap,
 	oAuthProxy,
-	openAPI,
 	oidcProvider,
 } from "better-auth/plugins";
-import { reactInvitationEmail } from "./email/invitation";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
-import { reactResetPasswordEmail } from "./email/rest-password";
-import { resend } from "./email/resend";
 import { MysqlDialect } from "kysely";
 import { createPool } from "mysql2/promise";
 import { nextCookies } from "better-auth/next-js";
-import { passkey } from "better-auth/plugins/passkey";
 
-const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
-const to = process.env.TEST_EMAIL || "";
 
 const libsql = new LibsqlDialect({
 	url: process.env.TURSO_DATABASE_URL || "",
@@ -60,8 +51,6 @@ export const auth = betterAuth({
 		}
 	},
 	plugins: [
-		passkey(),
-		openAPI(),
 		bearer(),
 		admin(),
 		multiSession(),
